@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obras Disponíveis — Natane Castro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-deep:    #0f2a4a;
+      --blue-mid:     #1a3f6f;
+      --blue-soft:    #2c5f9e;
+      --blue-light:   #a8c4e0;
+      --blue-pale:    #e8f1f9;
+      --cream:        #faf8f5;
+      --ink:          #1a1814;
+      --muted:        #7a7570;
+      --border:       #dde5ee;
+      --white:        #ffffff;
+      --font-serif:   'Cormorant Garamond', Georgia, serif;
+      --font-sans:    'Jost', sans-serif;
+      --transition:   0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--ink);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-light); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: rgba(250, 248, 245, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--blue-deep);
+      text-decoration: none;
+      font-style: italic;
+    }
+
+    .nav-back {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color var(--transition);
+    }
+    .nav-back:hover { color: var(--blue-deep); }
+    .nav-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 10rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--blue-soft);
+      margin-bottom: 1rem;
+    }
+
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300;
+      color: var(--blue-deep);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .page-title em { font-style: italic; color: var(--blue-soft); }
+
+    .page-subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 36rem;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      max-width: 1200px;
+      margin: 2.5rem auto 0;
+      padding: 0 4rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.45rem 1.1rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--blue-mid);
+      color: var(--white);
+      border-color: var(--blue-mid);
+    }
+
+    /* ── GRID ── */
+    .obras-grid {
+      max-width: 1200px;
+      margin: 3rem auto 6rem;
+      padding: 0 4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    /* ── CARD ── */
+    .obra-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s forwards;
+    }
+    .obra-card:nth-child(1) { animation-delay: 0.05s; }
+    .obra-card:nth-child(2) { animation-delay: 0.12s; }
+    .obra-card:nth-child(3) { animation-delay: 0.19s; }
+    .obra-card:nth-child(4) { animation-delay: 0.26s; }
+    .obra-card:nth-child(5) { animation-delay: 0.33s; }
+    .obra-card:nth-child(6) { animation-delay: 0.40s; }
+    .obra-card:nth-child(7) { animation-delay: 0.47s; }
+    .obra-card:nth-child(8) { animation-delay: 0.54s; }
+    .obra-card:nth-child(9) { animation-delay: 0.61s; }
+
+    .obra-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(15, 42, 74, 0.10);
+    }
+
+    .obra-img-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--blue-pale);
+    }
+
+    .obra-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .obra-card:hover .obra-img-wrap img { transform: scale(1.05); }
+
+    /* Placeholder quando não há imagem */
+    .obra-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .obra-badge {
+      position: absolute;
+      top: 0.9rem;
+      right: 0.9rem;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--blue-soft);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+    }
+    .obra-badge.vendida {
+      background: var(--muted);
+    }
+
+    .obra-info {
+      padding: 1.4rem 1.5rem 1.5rem;
+    }
+
+    .obra-tecnica {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .obra-nome {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--blue-deep);
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+
+    .obra-dimensoes {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .obra-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .obra-preco {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--blue-deep);
+    }
+
+    .btn-detalhes {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue-mid);
+      background: transparent;
+      border: 1px solid var(--blue-light);
+      padding: 0.55rem 1.1rem;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .btn-detalhes:hover {
+      background: var(--blue-mid);
+      color: var(--white);
+      border-color: var(--blue-mid);
+    }
+
+    /* ── ANIMAÇÃO ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FOOTER SIMPLES ── */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .obras-grid { grid-template-columns: repeat(2, 1fr); padding: 0 2rem; }
+      .page-header { padding: 9rem 2rem 3rem; }
+      .filter-bar { padding: 0 2rem; }
+      nav { padding: 1.2rem 2rem; }
+    }
+    @media (max-width: 560px) {
+      .obras-grid { grid-template-columns: 1fr; }
+    }
+    /* ── CARROSSEL ── */
+.carrossel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.carrossel-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carrossel-slides img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.carrossel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background var(--transition);
+}
+.carrossel-btn:hover { background: var(--white); }
+.carrossel-btn.prev { left: 0.6rem; }
+.carrossel-btn.next { right: 0.6rem; }
+.carrossel-btn svg {
+  width: 14px; height: 14px;
+  stroke: var(--blue-deep);
+  fill: none;
+  stroke-width: 2;
+}
+
+.carrossel-dots {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+}
+.carrossel-dots span {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.carrossel-dots span.ativo { background: var(--white); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="natane.html" class="nav-logo">Natane Castro</a>
+    <a href="natane.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar ao site
+    </a>
+  </nav>
+
+  <!-- CABEÇALHO DA PÁGINA -->
+  <div class="page-header">
+    <div class="page-label">Galeria</div>
+    <h1 class="page-title">Obras <em>Disponíveis</em></h1>
+    <p class="page-subtitle">Obras originais em acrílico, aquarela e técnica mista. Cada peça acompanha certificado de autenticidade.</p>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filtrar(this, 'todas')">Todas</button>
+    <button class="filter-btn" onclick="filtrar(this, 'acrilico')">Acrílico</button>
+    <button class="filter-btn" onclick="filtrar(this, 'aquarela')">Aquarela</button>
+    <button class="filter-btn" onclick="filtrar(this, 'mista')">Técnica Mista</button>
+  </div>
+
+  <!-- GRID DE OBRAS -->
+  <!-- ================================================================
+       COMO EDITAR:
+       - Substitua src="..." pela URL da imagem de cada obra
+       - Edite o preço em <span class="obra-preco">
+       - Edite nome, técnica e dimensões conforme sua obra
+       - Adicione data-categoria="acrilico" | "aquarela" | "mista"
+       - Para marcar como vendida: adicione class="vendida" no badge
+       ================================================================ -->
+  <div class="obras-grid" id="grid">
+
+    <!-- OBRA 1 -  Aridez da Culpa -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <!-- Adicione ou remova <img> conforme necessário (máx. 5) -->
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Aridez%20da%20Culpa%20jpeg.jpg?raw=true" alt="Erupção de Emoções - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Aridez%20da%20culpa.%20Ambientado%20%202.PNG?raw=true" alt="Erupção de Emoções - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+    </div>
+    <span class="obra-badge">Disponível</span>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Aridez da Culpa</div>
+    <div class="obra-dimensoes">80 × 60 cm · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.600</span>
+      <a href="https://mpago.la/34298Mf" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+
+    <!-- OBRA 2 - Gritos Silenciosos-->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Gritos%20Silenciosos%20Jpeg%20full.jpg?raw=true" alt="Gritos Silenciosos - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Gritos%20silenciosos.%20Ambientado%20sem%20logo.png?raw=true" alt="Gritos Silenciosos - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Gritos Silenciosos</div>
+    <div class="obra-dimensoes">40 × 30 cm · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 3200</span>
+      <a href="https://mpago.la/2v7LqDd" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+
+    <!-- OBRA 3 - Erupção de Emoções -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Erup%C3%A7%C3%A3o%20de%20emo%C3%A7%C3%B5es.jpeg?raw=true" alt="Erupção de Emoções - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Erup%C3%A7%C3%A3o%20de%20Emo%C3%A7%C3%B5es%20ambientada.png?raw=true" alt="Erupção de Emoções - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Erupção de Emoções</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 3.500</span>
+      <a href="https://mpago.la/1tGycsr" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+
+    <!-- OBRA 4 - Iceberg Emocional -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Iceberg%20Emocional.jpg?raw=true" alt="Iceberg Emocional - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Iceberg%20Emocional%20ambientado%20sem%20logo.png?raw=true" alt="Iceberg Emocional - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Iceberg Emocional</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.600</span>
+      <a href="https://mpago.la/1fXihb7" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+
+    <!-- OBRA 5 - O Homem que Carregava seu Sonho -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/HomemQueCarregavaSeu%20sonho.jpg?raw=true" alt="O Homem que Carregava seu Sonho - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/o%20homem%20que%20carregava%20seu%20sonho%20-%20ambientada%20sem%20logo.png?raw=true" alt="O Homem que Carregava seu Sonho - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">O Homem que Carregava seu Sonho</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 1.700</span>
+      <a href="https://mpago.la/2qomnST" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+
+    <!-- OBRA 6 - Esperança Turva -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Esperan%C3%A7a%20Turva.jpg?raw=true" alt="Esperança Turva - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/eperan%C3%A7a%20turva%20ambientado%20sem%20logo.png?raw=true" alt="Esperança Turva - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Esperança Turva</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.000</span>
+      <a href="https://mpago.la/1ehdMNV" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 7 - Tempestade Mental -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Tempestade%20Mental.jpeg?raw=true" alt="Tempestade Mental - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/tempestade%20mental%20ambientada%20sem%20logo.png?raw=true" alt="Tempestade Mental - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Tempestade Mental</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 1.800</span>
+      <a href="https://mpago.la/1HEndWt" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 8 - Floresta Encantada -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Floresta%20Encantada.jpg?raw=true" alt="Floresta Encantada - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/floresta%20encantada%20ambientada%20sem%20logo.png?raw=true" alt="Floresta Encantada - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Floresta Encantada</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.200</span>
+      <a href="https://mpago.la/15jGBpb" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 9 - O Corpo que Entendeu a Lama -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/O%20corpo%20que%20entendeu%20a%20lama.jpg?raw=true" alt="O Corpo que Entendeu a Lama - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/o%20corpo%20que%20entendeu%20a%20lama%20ambientada%20sem%20logo.png?raw=true" alt="O Corpo que Entendeu a Lama - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">O Corpo que Entendeu a Lama</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.700</span>
+      <a href="https://mpago.la/1JN56Z2" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 10 - Conexão com as Raízes -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Conex%C3%A3o%20com%20as%20raizes.jpg?raw=true" alt="Conexão com as Raízes - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Conex%C3%A3o%20com%20as%20ra%C3%ADzes%20ambientada%20sem%20logo.jpg?raw=true" alt="Conexão com as Raízes - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Conexão com as Raízes</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 3.500</span>
+      <a href="https://mpago.la/1bM1KZK" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 11 - O Calor que Resistiu a Neve -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/O%20Calor%20que%20Resistiu%20a%20Neve.jpg?raw=true" alt="O Calor que Resistiu a Neve - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/O%20calor%20que%20resistiu%20a%20neve.%20Ambientado%20sem%20logo.png?raw=true" alt="O Calor que Resistiu a Neve - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">O Calor que Resistiu a Neve</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 1.300</span>
+      <a href="https://mpago.la/25YtpVq" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 12 - Descanso em Atma -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Descanso%20em%20atma%20jpeg.jpg?raw=true" alt="Descanso em Atma - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Descanso%20em%20Atma%20Ambientado%20sem%20logo.jpeg?raw=true" alt="Descanso em Atma - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Descanso em Atma</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.800</span>
+      <a href="https://mpago.la/1YbGk2i" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 13 - Descanso na Cachoeira -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Descanso%20na%20Cachoeira.jpg?raw=true" alt="Descanso na Cachoeira - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Descanso%20na%20cachoeira%20ambientado%20sem%20logo.jpeg?raw=true" alt="Descanso na Cachoeira - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Descanso na Cachoeira</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 4.800</span>
+      <a href="https://mpago.la/1WnRhpZ" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 14 - Sussurro da Noite -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Sussuro%20da%20Noite.jpg?raw=true" alt="Sussurro da Noite - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Sussurro%20da%20noite%20ambientada%20sem%20logo.jpeg?raw=true" alt="Sussurro da Noite - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Sussurro da Noite</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 5.200</span>
+      <a href="https://mpago.la/1o9MkoW" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+<!-- OBRA 15 - Núcleo Pulsante -->
+<div class="obra-card" data-categoria="acrilico">
+  <div class="obra-img-wrap">
+    <div class="carrossel" data-index="0">
+      <div class="carrossel-slides">
+        <img src="https://github.com/catskilltrader/Natane/blob/main/Nucleo%20Pulsante.jpeg?raw=true" alt="Núcleo Pulsante - foto 1" />
+        <img src="https://github.com/catskilltrader/Natane/blob/main/N%C3%BAcleo%20pulsante%20ambientada%20sem%20logo.jpeg?raw=true" alt="Núcleo Pulsante - foto 2" />
+      </div>
+      <button class="carrossel-btn prev" onclick="moverCarrossel(this, -1)">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carrossel-btn next" onclick="moverCarrossel(this, 1)">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carrossel-dots">
+        <span class="ativo"></span>
+        <span></span>
+      </div>
+      <span class="obra-badge">Disponível</span>
+    </div>
+  </div>
+  <div class="obra-info">
+    <div class="obra-tecnica">Acrílico sobre tela</div>
+    <div class="obra-nome">Núcleo Pulsante</div>
+    <div class="obra-dimensoes">Acrílico sobre tela · 2024</div>
+    <div class="obra-footer">
+      <span class="obra-preco">R$ 2.400</span>
+      <a href="https://mpago.la/2XTaySk" class="btn-detalhes">Adquira essa obra</a>
+    </div>
+  </div>
+</div>
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    © 2025 Natane Castro — Fine Art. Todos os direitos reservados.
+  </footer>
+
+  <script>
+  function filtrar(btn, categoria) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.obra-card').forEach(card => {
+      if (categoria === 'todas' || card.dataset.categoria === categoria) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function moverCarrossel(btn, direcao) {
+    const carrossel = btn.closest('.carrossel');
+    const slides = carrossel.querySelectorAll('.carrossel-slides img');
+    const dots = carrossel.querySelectorAll('.carrossel-dots span');
+    let index = parseInt(carrossel.dataset.index) + direcao;
+
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+
+    carrossel.dataset.index = index;
+
+    slides.forEach((img, i) => {
+      img.style.transition = 'transform 0.5s ease';
+      img.style.transform = `translateX(${(i - index) * 100}%)`;
+    });
+
+    dots.forEach((d, i) => d.classList.toggle('ativo', i === index));
+  }
+
+  document.querySelectorAll('.carrossel').forEach(carrossel => {
+    carrossel.querySelectorAll('.carrossel-slides img').forEach((img, i) => {
+      img.style.transform = `translateX(${i * 100}%)`;
+    });
+  });
+</script>
+</body>
+</html>
