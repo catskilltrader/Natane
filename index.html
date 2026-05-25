@@ -103,12 +103,13 @@
     .nav-cta:hover { background: var(--blue-deep) !important; }
 
     /* ── HERO ── */
-    #hero {
-      height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-    }
+      #hero {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+    
 
     .hero-left {
       display: flex;
@@ -222,25 +223,12 @@
     }
 
     .hero-image-grid {
-   <div class="hero-image-grid">
-  <!-- Bloco 1 com sua imagem real -->
-  <div class="hero-img-block">
-    <img class="img-fill" <src="https://raw.githubusercontent.com/catskilltrader/Natane/main/Erup%C3%A7%C3%A3o%20de%20emo%C3%A7%C3%B5es.jpeg" alt="Erupção de emoções">
-  </div>
-  <!-- Bloco 2 - placeholder com imagem a substituir -->
-  <div class="hero-img-block">
-    <img class="img-fill" src="[COLE AQUI O LINK DA SUA SEGUNDA IMAGEM]" alt="Título da Obra 2">
-  </div>
-  <!-- Bloco 3 - placeholder com imagem a substituir -->
-  <div class="hero-img-block">
-    <img class="img-fill" src="[COLE AQUI O LINK DA SUA TERCEIRA IMAGEM]" alt="Título da Obra 3">
-  </div>
-  <!-- Bloco 4 - placeholder com imagem a substituir -->
-  <div class="hero-img-block">
-    <img class="img-fill" src="[COLE AQUI O LINK DA SUA QUARTA IMAGEM]" alt="Título da Obra 4">
-  </div>
-</div>
-    }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  width: 100%;
+}
 
     .hero-img-block {
       overflow: hidden;
@@ -949,12 +937,19 @@
     </div>
     <div class="hero-right">
       <div class="hero-image-grid">
-        <div class="hero-img-block"><div class="art-placeholder ap-1"><span class="art-number">I</span></div></div>
-        <div class="hero-img-block"><div class="art-placeholder ap-2"><span class="art-number">II</span></div></div>
-        <div class="hero-img-block"><div class="art-placeholder ap-3"><span class="art-number">III</span></div></div>
-        <div class="hero-img-block"><div class="art-placeholder ap-4"><span class="art-number">IV</span></div></div>
-      </div>
-    </div>
+  <div class="hero-img-block">
+    <img class="img-fill" src="https://github.com/catskilltrader/Natane/blob/main/Gritos%20Silenciosos%20Jpeg%20full.jpg?raw=true" alt="Gritos Silenciosos" />
+  </div>
+  <div class="hero-img-block">
+    <img class="img-fill" src="https://github.com/catskilltrader/Natane/blob/main/Erup%C3%A7%C3%A3o%20de%20emo%C3%A7%C3%B5es.jpeg?raw=true" alt="Erupção de Emoções" />
+  </div>
+  <div class="hero-img-block">
+    <img class="img-fill" src="https://github.com/catskilltrader/Natane/blob/main/Sussuro%20da%20Noite.jpg?raw=true" alt="Sussurro da Noite" />
+  </div>
+  <div class="hero-img-block">
+    <img class="img-fill" src="https://github.com/catskilltrader/Natane/blob/main/Iceberg%20Emocional.jpg?raw=true" alt="Iceberg Emocional" />
+  </div>
+</div>
   </section>
 
   <!-- ABOUT -->
@@ -962,22 +957,18 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-visual reveal">
-          <div class="about-portrait"></div>
-          <div class="about-badge"><span>Fine<br/>Art<br/>2009–</span></div>
+          <div class="about-portrait">
+            <img src="https://github.com/catskilltrader/Natane/blob/main/Sobre%20a%20artista.jpeg?raw=true" alt="Natane Castro" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
         </div>
         <div class="reveal">
           <p class="section-label">Sobre a Artista</p>
           <h2 class="section-title">Um olhar que procura<br /> <em>por arte na vida</em></h2>
+          n.1999, Cristina, Minas Gerais, Brasil
+      
           <div class="divider"></div>
           <p class="section-body">
-            Artista visual inspirada pela potência dos elementos da natureza e pelo fluxo sensível das cores. Meu trabalho nasce do encontro entre o inconsciente humano e as forças naturais, criando um diálogo entre emoções, alma e paisagem.
-
-Por meio de texturas orgânicas e pinceladas livres, transformo a pintura em uma linguagem viva, onde sentimentos se tornam visíveis. Acredito na arte como forma de traduzir e expandir a experiência sensível do ser.
-
-Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com a natureza a origem do meu olhar artístico. Atualmente vivo em Juiz de Fora, onde me formei em Artes e Design e Artes Visuais pela Universidade Federal de Juiz de Fora.
-          </p>
-          <p class="section-body" style="margin-top:1rem;">
-            
+            Artista visual inspirada pela potência dos elementos da natureza e pelo fluxo sensível das cores. Meu trabalho nasce do encontro entre o inconsciente humano e as forças naturais, criando um diálogo entre emoções, alma e paisagem. Por meio de texturas orgânicas e pinceladas livres, transformo a pintura em uma linguagem viva, onde sentimentos se tornam visíveis. Acredito na arte como forma de traduzir e expandir a experiência sensível do ser. Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com a natureza a origem do meu olhar artístico. Atualmente vivo em Juiz de Fora, onde me formei em Artes e Design e Artes Visuais pela Universidade Federal de Juiz de Fora.
           </p>
           <div class="about-stats">
             <div class="stat-item">
@@ -985,7 +976,7 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
               <div class="stat-label">Anos de carreira</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">15</div>
+              <div class="stat-number">16</div>
               <div class="stat-label">Pinturas ao Vivo</div>
             </div>
             <div class="stat-item">
@@ -1201,7 +1192,8 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
               <span class="faq-icon"></span>
             </button>
             <div class="faq-answer">
-              <div class="faq-answer-inner">Entre em contato pelo formulário ou por e-mail. Obras disponíveis são informadas com valores, dimensões e disponibilidade. O pagamento é feito por transferência bancária ou PIX, e a obra é enviada com certificado de autenticidade.</div>
+              <div class="faq-answer-inner"> Consulte a aba "Obras Disponíveis", e entre em contato para solicitar a reserva da peça. Após isso, retornarei para combinarmos os detalhes do envio e pagamento, que poderá ser feito aqui direto pelo site, onde trabalho com a plataforma segura do MercadoPago com opções tanto à vista quanto parcelado. Caso tenha dúvidas outras antes da compra, fique a vontade para entrar em contato pelo formulário, email ou diretamente pelo whatsapp.
+                 </div>
             </div>
           </div>
           <div class="faq-item">
@@ -1210,16 +1202,16 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
               <span class="faq-icon"></span>
             </button>
             <div class="faq-answer">
-              <div class="faq-answer-inner">Sim. Aceito encomendas para projetos específicos mediante consulta prévia. O processo inclui uma conversa inicial, apresentação de estudos e aprovação do cliente antes da execução final. O prazo médio é de 60 a 90 dias.</div>
+              <div class="faq-answer-inner">Sim. Para obras personalizadas ou projetos únicos, entre em contato pelo formulário ou email, que receberá todos os detalhes sobre o processo e conversaremos sobre os detalhes da obra.</div>
             </div>
           </div>
           <div class="faq-item">
             <button class="faq-question">
-              Qual o prazo e custo de envio?
+              Envia para todo o Brasil? Qual o prazo e custo de envio?
               <span class="faq-icon"></span>
             </button>
             <div class="faq-answer">
-              <div class="faq-answer-inner">As obras são embaladas com material especializado e enviadas por transportadoras de arte. O frete é calculado conforme o destino e o tamanho da peça. Envio para todo o Brasil e exterior. Prazo médio: 7 a 15 dias úteis.</div>
+              <div class="faq-answer-inner"> Envio para todo o Brasil e exterior.  Após a confirmação do pagamento, sua obra será cuidadosamente embalada enviada. Prazo médio: 7 a 15 dias úteis para Obras Disponíveis, e de 45 a 90 dias para obras personalizadas. Os custos variam conforme a transportadora, e dimensões da obra. Entre em contato para solicitar uma cotação.</div>
             </div>
           </div>
           <div class="faq-item">
@@ -1233,20 +1225,8 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
           </div>
           <div class="faq-item">
             <button class="faq-question">
-              Galerias podem representar a artista?
-              <span class="faq-icon"></span>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">Estou aberta a conversas com galerias que tenham afinidade com meu trabalho. Entre em contato pelo e-mail com apresentação institucional e histórico de representação. Responderei em até 15 dias úteis.</div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-question">
-              Aceita visitas ao ateliê?
-              <span class="faq-icon"></span>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">Sim, mediante agendamento prévio. Visitas ao ateliê são abertas a colecionadores, curadores e interessados em conhecer o processo de criação de perto. Escreva com antecedência de pelo menos uma semana.</div>
+            
+          
             </div>
           </div>
         </div>
@@ -1359,16 +1339,16 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
           <p class="section-label">Contato</p>
           <h2 class="section-title">Vamos <em>conversar</em></h2>
           <div class="divider"></div>
-          <p class="section-body">Para aquisição de obras, encomendas, parcerias ou visitas ao ateliê — entre em contato.</p>
+          <p class="section-body">Para aquisição de obras, encomendas, parcerias ou dúvidas em geral — entre em contato.</p>
 
           <div class="contact-cards">
-            <a href="/cdn-cgi/l/email-protection#beddd1d0cadfcad1fed7cddfdcdbd2dfd3dfcccfcbdbcd90dfccca" class="contact-card">
+            <a href="mailto:natanecastroo2@gmail.com" class="contact-card">
               <div class="contact-card-icon">
                 <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               </div>
               <div>
                 <div class="contact-card-label">E-mail</div>
-                <div class="contact-card-value"><span class="__cf_email__" data-cfemail="385b57564c594c5778514b595a5d545955594a494d5d4b16594a4c">[email&#160;protected]</span></div>
+<div class="contact-card-value">natanecastroo2@gmail.com</div>
               </div>
             </a>
             <a href="https://wa.me/5531999999999" class="contact-card" target="_blank">
@@ -1410,9 +1390,9 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
                 <option value="">Selecione um assunto</option>
                 <option>Aquisição de obra disponível</option>
                 <option>Encomenda personalizada</option>
+                <option>Pintura ao vivo e eventos</option>
                 <option>Parceria comercial</option>
                 <option>Imprensa / curadoria</option>
-                <option>Visita ao ateliê</option>
                 <option>Outro</option>
               </select>
             </div>
@@ -1476,11 +1456,10 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
         </div>
 
         <div>
-          <div class="footer-col-title">Contato</div>
+          <div class="footer-col-title">Entre em Contato</div>
           <ul class="footer-links">
-            <li><a href="/cdn-cgi/l/email-protection#ea8985849e8b9e85aa83998b888f868b878b989b9f8f99c48b989e"><span class="__cf_email__" data-cfemail="c1a2aeafb5a0b5ae81a8b2a0a3a4ada0aca0b3b0b4a4b2efa0b3b5">[email&#160;protected]</span></a></li>
-            <li><a href="#">Ateliê — Belo Horizonte, MG</a></li>
-            <li><a href="#">Agendamento de visita</a></li>
+            <li><a href="mailto:natanecastroo2@gmail.com">natanecastroo2@gmail.com</a></li>
+          
           </ul>
         </div>
       </div>
@@ -1495,8 +1474,8 @@ Natural de Pedralva, no interior de Minas Gerais, encontrei na convivência com 
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Navbar scroll
+
+      <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>// Navbar scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);

@@ -378,6 +378,40 @@
   transition: background var(--transition);
 }
 .carrossel-dots span.ativo { background: var(--white); }
+/* ── LIGHTBOX ── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.92);
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.ativo {
+  display: flex;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 2px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-fechar {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.lightbox-fechar:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -931,6 +965,30 @@
       img.style.transform = `translateX(${i * 100}%)`;
     });
   });
+  function abrirLightbox(src, alt) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-img').alt = alt;
+  document.getElementById('lightbox').classList.add('ativo');
+  document.body.style.overflow = 'hidden';
+}
+
+function fecharLightbox(event) {
+  if (!event || event.target !== document.getElementById('lightbox-img')) {
+    document.getElementById('lightbox').classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
+}
+document.querySelectorAll('.carrossel-slides img').forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', () => {
+    abrirLightbox(img.src, img.alt);
+  });
+});
 </script>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="fecharLightbox(event)">
+  <button class="lightbox-fechar" onclick="fecharLightbox()">×</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+</div>
 </body>
 </html>
